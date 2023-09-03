@@ -1,0 +1,147 @@
+/* Estilos para el encabezado */
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #131313ea;
+    color: #f5f5f5;
+    padding: 10px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 100px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #f5f5f5;
+}
+
+.cart {
+    display: flex;
+}
+
+.cart a {
+    text-decoration: none;
+    color: #f5f5f5;
+}
+
+.cart img {
+    width: 80px;
+}
+
+/*  --------------FIN HEADER--------------- */
+
+/* Estilos para la tarjeta de la película en el main */
+.movie-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.card-content {
+    padding: 20px;
+    text-align: left;
+}
+
+.card-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.card-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Agrega más estilos según sea necesario */
+
+
+/* Estilos para el footer */
+footer {
+    background-color: #131313ea;
+    color: #f5f5f5;
+    padding: 40px 50px;
+    align-items: center;
+    
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.footer-left img {
+    width: 100px;
+}
+
+.footer-center ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-center a {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-weight: bold;
+}
+
+.footer-right {
+    display: flex;
+}
+
+.redes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-right a {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-weight: bold;
+}
+
+.fab {
+    font-size: 24px;
+    margin: 0 7px;
+}
+
+.footer-right img {
+    width: 24px;
+}

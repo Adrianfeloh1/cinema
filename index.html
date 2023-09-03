@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CineColombia</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./src/modal.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="./public/Logo-cinecolombia.webp" alt="Cinecolombia Logo" />
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Cartelera</a></li>
+                <li><a href="#">Sucursales</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="cart">
+            <button id="myBtn"><img src="./public/tickets.png" alt="tickets"></button>                        
+            <span>2</span>
+        </div>
+    </header>
+
+    <main>
+        <section id="products_container">
+
+
+        </section>
+
+    </main>
+
+    <!-- Modal -->    
+    
+    <div id="myModal" class="modal">
+        <!-- Contenido del modal -->
+        <div class="modal-contenido">
+            <span class="cerrar">X</span>
+            <p>Algun texto en el modal..</p>
+        </div>
+    </div>
+
+
+
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="./public/Logo-cinecolombia.webp" alt="Cinecolombia Logo">
+            </div>
+            <div class="footer-center">
+                <ul>
+                    <li> | <a href="#">Información Legal </a> | </li>
+                    <li> | <a href="#">Acerca de Cineco</a> | </li>
+                    <li> | <a href="#">Contáctanos PQRS</a> | </li>
+                </ul>
+            </div>
+            <div class="redes-container">
+                <p>Síguenos en redes sociales</p>
+                <div class="footer-right">
+                    <!-- Agrega aquí tus enlaces a redes sociales -->
+                    <a href="#"><i class="fab fa-facebook-square"></i></a>
+                    <a href="#"><i class="fab fa-twitter-square"></i></a>
+                    <a href="#"><i class="fab fa-instagram-square"></i></a>
+                    <i class="fa-brands fa-square-facebook"></i>
+                </div>
+            </div>
+        </div>        
+    </footer>
+
+
+
+    <script src="app.js"></script>
+    <script src="./src/modal.js"></script>
+</body>
+
+</html>
