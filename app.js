@@ -40,15 +40,54 @@ class ControladorDePeliculas {
                     <p><strong>Estreno:</strong> ${pelicula.estreno}</p>
                     <p><strong>Género:</strong> ${pelicula.genero}</p>
                     <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
-                    <button> Comprar </button>
+                    <button id="agregar-pelicula-${pelicula.id}"> Comprar </button>
                 </div>
-        </div> `
+            </div> `
+        })
+
+        this.listaPeliculas.forEach(pelicula => {
+            const agregarPelicula = document.getElementById(`agregar-pelicula-${pelicula.id}`)
+
+            agregarPelicula.addEventListener("click", () => {
+                carrito.agregar(pelicula)
+                carrito.mostrarEnDom()
+            })
+        })
+    }
+}
+
+// 4. creamos la clase Carrito
+class Carrito {
+    constructor() {
+        this.listaCarrito = []
+    }
+
+    agregar(pelicula) {
+        this.listaCarrito.push(pelicula)
+    }
+
+    mostrarEnDom() {
+        let contenedor_carrito = document.getElementById("cart_container")
+        this.listaCarrito.forEach(pelicula => {
+            contenedor_carrito.innerHTML += `
+            <div class="movie-card">
+                <div class="card-content">
+                    <img src="${pelicula.img}" alt="${pelicula.alt}">
+                    <h2>${pelicula.titulo}</h2>
+                    <p><strong>Estreno:</strong> ${pelicula.estreno}</p>
+                    <p><strong>Género:</strong> ${pelicula.genero}</p>
+                    <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
+                    <button id="agregar-pelicula-${pelicula.id}"> Comprar </button>
+                </div>
+            </div>`
         })
     }
 }
 
 // 2.2 creamos una instancia CP (CONTROLLADOR PELICULAS )
 const CP = new ControladorDePeliculas()
+// 4.1 creamos las instancia para el carrito
+const carrito = new Carrito()
 
 // 1.1 Creaamos las películas 
 const p1 = new Pelicula(1, "Película 1", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1")
@@ -73,6 +112,7 @@ CP.agregar(p8)
 
 //3.1 mostramos en DOM
 CP.mostrarEnDom()
+
 
 
 /* ------------------------------------------------------------------------------------------------- */
