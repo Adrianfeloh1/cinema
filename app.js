@@ -114,10 +114,33 @@ listaDePeliculas.forEach((pelicula) => {
 //4.3 lo agregamos al localStorage como string
 let listaDePeliculasJSON = JSON.stringify(listaDePeliculas)
 localStorage.setItem("listaCompra", listaDePeliculasJSON)
-//para traer los datos, lo hacemos con getItem PARSEADO
-/* let listaDePeliculasObjetoJSON = localStorage.getItem ("listacompra")
+
+//4.4 para traer los datos, lo hacemos con getItem y lo PARSEAMOS
+
+let listaDePeliculasObjetoJSON = localStorage.getItem("listacompra")
 let listaPeliculas = JSON.parse(listaDePeliculasJSON)
-console.log(listaPeliculas) */
+console.log(listaPeliculas)
+
+// 4.5 para traer el objeto con sus metodos
+let nuevaListaPeliculas = []
+listaPeliculas.forEach((pelicula) => {
+
+    let nuevaPelicula = new Pelicula(
+        pelicula.id,
+        pelicula.titulo,
+        pelicula.estreno,
+        pelicula.genero,
+        pelicula.horarios,
+        pelicula.precio,
+        pelicula.sala,
+        pelicula.cantidad,
+        pelicula.img,
+        pelicula.alt
+    )
+    nuevaListaPeliculas.push(nuevaPelicula)
+})
+//4.6 definimos de nuevo listaPeliculas con el resultado de nuevaListaPeliculas
+listaPeliculas = nuevaListaPeliculas
 
 CP.mostrarEnDom();
 
