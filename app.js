@@ -31,6 +31,7 @@ class ControladorDePeliculas {
     // 3.mostramos listaPeliculas[p1,p2,p3...]
     mostrarEnDom() {
         let contenedor_pelicula = document.getElementById("products_container")
+            
         this.listaPeliculas.forEach(pelicula => {
             contenedor_pelicula.innerHTML += `
             <div class="movie-card">
@@ -40,7 +41,7 @@ class ControladorDePeliculas {
                     <p><strong>Estreno:</strong> ${pelicula.estreno}</p>
                     <p><strong>Género:</strong> ${pelicula.genero}</p>
                     <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
-                    <button id="agregar-pelicula-${pelicula.id}"> Comprar </button>
+                    <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Comprar </button>
                 </div>
             </div> `
         })
@@ -68,6 +69,9 @@ class Carrito {
 
     mostrarEnDom() {
         let contenedor_carrito = document.getElementById("cart_container")
+        //3.2 limpiamos el carrito para que no repita peliculas
+        contenedor_carrito.innerHTML = ""
+        
         this.listaCarrito.forEach(pelicula => {
             contenedor_carrito.innerHTML += `
             <div class="movie-card">
