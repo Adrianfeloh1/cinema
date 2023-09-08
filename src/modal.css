@@ -19,8 +19,7 @@
 .modal-contenido {
     background-color: #fefefe;
     margin: 9% auto;
-    /* 9% desde arriba y centrado */
-    padding: 20px;
+    /* 9% desde arriba y centrado */    
     border: 1px solid #888;
     width: 50%;
     /* Podría ser más o menos, dependiendo del tamaño de la pantalla */

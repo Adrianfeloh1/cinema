@@ -141,6 +141,7 @@ listaPeliculas.forEach((pelicula) => {
 })
 //4.6 definimos de nuevo listaPeliculas con el resultado de nuevaListaPeliculas
 listaPeliculas = nuevaListaPeliculas
+console.log(listaPeliculas)
 
 CP.mostrarEnDom();
 
