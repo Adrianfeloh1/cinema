@@ -1,9 +1,10 @@
 
 // 1. Definimos la clase Pelicula para crear las peliculas
 class Pelicula {
-    constructor(id, titulo, estreno, genero, horarios, precio, sala, cantidad, img, alt) {
+    constructor(id, titulo, descripcion, estreno, genero, horarios, precio, sala, cantidad, img, alt) {
         this.id = id;
         this.titulo = titulo;
+        this.descripcion = descripcion;
         this.estreno = estreno;
         this.genero = genero;
         this.precio = precio;
@@ -60,31 +61,38 @@ class ControladorDePeliculas {
 // 4. creamos la clase Carrito
 class Carrito {
     constructor() {
-        this.listaCarrito = []
+        this.peliculaSeleccionada = []; // Se almacenar la película seleccionada
+        this.contenedorCarrito = document.getElementById("cart_container");
     }
 
     agregar(pelicula) {
-        this.listaCarrito.push(pelicula)
+        this.peliculaSeleccionada = pelicula; // Al seleccionar una película, actualiza la propiedad
+        this.mostrarEnDom();
     }
 
     mostrarEnDom() {
-        let contenedor_carrito = document.getElementById("cart_container")
-        //3.2 limpiamos el carrito para que no repita peliculas
-        contenedor_carrito.innerHTML = ""
+        // Limpia el carrito para que solo se muestre la película seleccionada
+        this.contenedorCarrito.innerHTML = "";
 
-        this.listaCarrito.forEach(pelicula => {
-            contenedor_carrito.innerHTML += `
-            <div class="movie-card">
-                <div class="card-content">
+        if (this.peliculaSeleccionada) {
+            const pelicula = this.peliculaSeleccionada;
+            this.contenedorCarrito.innerHTML += `
+            <div class="movie-card2">
+                <div>
                     <img src="${pelicula.img}" alt="${pelicula.alt}">
+                </div>
+            
+                <div class="card-content">
                     <h2>${pelicula.titulo}</h2>
-                    <p><strong>Estreno:</strong> ${pelicula.estreno}</p>
-                    <p><strong>Género:</strong> ${pelicula.genero}</p>
+                    <p class="descripcion"><strong>Descripción:</strong> ${pelicula.descripcion}</p>
                     <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
+                    <p><strong>Género:</strong> ${pelicula.genero}</p>
+                    <p><strong>Sala:</strong> ${pelicula.sala}</p>
+                    <p class="descripcion"><strong>Precio:</strong> $${pelicula.precio}</p>
                     <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Comprar </button>
                 </div>
-            </div>`
-        })
+            </div>`;
+        }
     }
 }
 
@@ -96,14 +104,14 @@ const carrito = new Carrito()
 // 1.1 Creaamos las películas 4.1 lo pasamos a una lista
 
 const listaDePeliculas = [
-    new Pelicula(1, "Película 1", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1"),
-    new Pelicula(3, "Película 2", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 17500, "General", 100, "./public/sonido-de-libertad.jpg", "Texto alternativo 1"),
-    new Pelicula(2, "Película 3", "20 de septiembre de 2023", "Drama", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/blue-beetle.jpg", "Texto alternativo 2"),
-    new Pelicula(4, "Película 4", "20 de septiembre de 2023", "Comedia", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/gran-turismo.jpg", "Texto alternativo 2"),
-    new Pelicula(5, "Película 5", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/rey-montaña.jpg", "Texto alternativo 1"),
-    new Pelicula(6, "Película 6", "20 de septiembre de 2023", "Comedia", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/milagros.png", "Texto alternativo 2"),
-    new Pelicula(7, "Película 7", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 17500, "General", 100, "./public/venice.png", "Texto alternativo 1"),
-    new Pelicula(8, "Película 8", "20 de septiembre de 2023", "Ciencia Ficción", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/golda.png", "Texto alternativo 2")
+    new Pelicula(1, "Oppenheimer", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "1 de septiembre de 2023", " Thriller, Acción", ["7:00 PM", " 9:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1"),
+    new Pelicula(3, "Sonido de Libertad", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "5 de septiembre de 2023", "Drama, Acción", ["8:00 PM", " 10:00 PM"], 17500, "General", 100, "./public/sonido-de-libertad.jpg", "Texto alternativo 1"),
+    new Pelicula(2, "Blue Beetle", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "8 de septiembre de 2023", "Fantasía, Ciencia Ficción", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/blue-beetle.jpg", "Texto alternativo 2"),
+    new Pelicula(4, "Gran Turismo", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "5 de septiembre de 2023", "Acción, Historia", ["5:00 PM", " 7:00 PM"], 17500, "General", 120, "./public/gran-turismo.jpg", "Texto alternativo 2"),
+    new Pelicula(5, "El Rey de la Montaña", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "10 de septiembre de 2023", "Historia", ["3:00 PM", " 6:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/rey-montaña.jpg", "Texto alternativo 1"),
+    new Pelicula(6, "Milagros", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "10 de septiembre de 2023", "Comedia, aventura", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/milagros.png", "Texto alternativo 2"),
+    new Pelicula(7, "Cacería en Venecia", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "8 de septiembre de 2023", "Acción", ["2:00 PM", " 5:00 PM"], 17500, "General", 100, "./public/venice.png", "Texto alternativo 1"),
+    new Pelicula(8, "Golda", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "5 de septiembre de 2023", "Drama", ["5:00 PM", " 7:30 PM"], 25800, "IMAX DINAMICS", 120, "./public/golda.png", "Texto alternativo 2")
 ];
 
 // 4.2 recorremos las películas y la agregamos a la instancia de CP.agregar

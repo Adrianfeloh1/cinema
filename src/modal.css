@@ -18,11 +18,11 @@
 /* Contenido del modal */
 .modal-contenido {
     background-color: #fefefe;
-    margin: 9% auto;
+    margin: 5% auto;
     /* 9% desde arriba y centrado */    
     border: 1px solid #888;
-    width: 50%;
-    /* Podría ser más o menos, dependiendo del tamaño de la pantalla */
+    width: 600px; 
+    height: 450px;   
 }
 
 /* El botón de cerrar */

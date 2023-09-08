@@ -52,7 +52,13 @@ nav a {
 
 /* Estilos para la tarjeta de la película en el main */
 
+.caterlera{
+    padding: 0px 80px;
+    margin-top: 30px;
+}
+
 #products_container {
+    padding: 0 70px;
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
@@ -66,7 +72,12 @@ nav a {
     box-shadow: 6px 6px 12px #9b9b9b,
         -6px -6px 12px #ffffff;
     margin: 20px auto;
-    max-width: 250px;
+    width: 250px;
+}
+
+.movie-card2{
+    display: flex; 
+    justify-content: start;   
 }
 
 .card-content {
@@ -76,9 +87,14 @@ nav a {
     text-align: left;
 }
 
+.descripcion{    
+    padding: 20px 0;
+    
+}
+
 .card-content img {
     text-align: center;
-    max-width: 100%;
+    width: 100%;
     border-radius: 4px;
     height: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
