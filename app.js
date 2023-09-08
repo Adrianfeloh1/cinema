@@ -31,7 +31,7 @@ class ControladorDePeliculas {
     // 3.mostramos listaPeliculas[p1,p2,p3...]
     mostrarEnDom() {
         let contenedor_pelicula = document.getElementById("products_container")
-            
+
         this.listaPeliculas.forEach(pelicula => {
             contenedor_pelicula.innerHTML += `
             <div class="movie-card">
@@ -71,7 +71,7 @@ class Carrito {
         let contenedor_carrito = document.getElementById("cart_container")
         //3.2 limpiamos el carrito para que no repita peliculas
         contenedor_carrito.innerHTML = ""
-        
+
         this.listaCarrito.forEach(pelicula => {
             contenedor_carrito.innerHTML += `
             <div class="movie-card">
@@ -81,7 +81,7 @@ class Carrito {
                     <p><strong>Estreno:</strong> ${pelicula.estreno}</p>
                     <p><strong>Género:</strong> ${pelicula.genero}</p>
                     <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
-                    <button id="agregar-pelicula-${pelicula.id}"> Comprar </button>
+                    <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Comprar </button>
                 </div>
             </div>`
         })
@@ -93,29 +93,33 @@ const CP = new ControladorDePeliculas()
 // 4.1 creamos las instancia para el carrito
 const carrito = new Carrito()
 
-// 1.1 Creaamos las películas 
-const p1 = new Pelicula(1, "Película 1", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1")
-const p2 = new Pelicula(3, "Película 2", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 17500, "General", 100, "./public/sonido-de-libertad.jpg", "Texto alternativo 1")
-const p3 = new Pelicula(2, "Película 3", "20 de septiembre de 2023", "Drama", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/blue-beetle.jpg", "Texto alternativo 2")
-const p4 = new Pelicula(4, "Película 4", "20 de septiembre de 2023", "Comedia", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/gran-turismo.jpg", "Texto alternativo 2")
-const p5 = new Pelicula(5, "Película 5", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/rey-montaña.jpg", "Texto alternativo 1")
-const p6 = new Pelicula(6, "Película 6", "20 de septiembre de 2023", "Comedia", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/milagros.png", "Texto alternativo 2")
-const p7 = new Pelicula(7, "Película 7", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 17500, "General", 100, "./public/venice.png", "Texto alternativo 1")
-const p8 = new Pelicula(8, "Película 8", "20 de septiembre de 2023", "Ciencia Ficción", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/golda.png", "Texto alternativo 2")
+// 1.1 Creaamos las películas 4.1 lo pasamos a una lista
 
+const listaDePeliculas = [
+    new Pelicula(1, "Película 1", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1"),
+    new Pelicula(3, "Película 2", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 17500, "General", 100, "./public/sonido-de-libertad.jpg", "Texto alternativo 1"),
+    new Pelicula(2, "Película 3", "20 de septiembre de 2023", "Drama", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/blue-beetle.jpg", "Texto alternativo 2"),
+    new Pelicula(4, "Película 4", "20 de septiembre de 2023", "Comedia", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/gran-turismo.jpg", "Texto alternativo 2"),
+    new Pelicula(5, "Película 5", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/rey-montaña.jpg", "Texto alternativo 1"),
+    new Pelicula(6, "Película 6", "20 de septiembre de 2023", "Comedia", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/milagros.png", "Texto alternativo 2"),
+    new Pelicula(7, "Película 7", "15 de septiembre de 2023", "Acción", ["10:00 AM", " 2:00 PM"], 17500, "General", 100, "./public/venice.png", "Texto alternativo 1"),
+    new Pelicula(8, "Película 8", "20 de septiembre de 2023", "Ciencia Ficción", ["11:00 AM", " 3:00 PM"], 25800, "IMAX DINAMICS", 120, "./public/golda.png", "Texto alternativo 2")
+];
 
-// 2.3 ahora podemos agregar las peliculas a la listaPeliculas del controlador
-CP.agregar(p1)
-CP.agregar(p2)
-CP.agregar(p3)
-CP.agregar(p4)
-CP.agregar(p5)
-CP.agregar(p6)
-CP.agregar(p7)
-CP.agregar(p8)
+// 4.2 recorremos las películas y la agregamos a la instancia de CP.agregar
+listaDePeliculas.forEach((pelicula) => {
+    CP.agregar(pelicula);
+})
 
-//3.1 mostramos en DOM
-CP.mostrarEnDom()
+//4.3 lo agregamos al localStorage como string
+let listaDePeliculasJSON = JSON.stringify(listaDePeliculas)
+localStorage.setItem("listaCompra", listaDePeliculasJSON)
+//para traer los datos, lo hacemos con getItem PARSEADO
+/* let listaDePeliculasObjetoJSON = localStorage.getItem ("listacompra")
+let listaPeliculas = JSON.parse(listaDePeliculasJSON)
+console.log(listaPeliculas) */
+
+CP.mostrarEnDom();
 
 
 
