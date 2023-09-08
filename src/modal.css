@@ -11,7 +11,7 @@
     overflow: auto;
     /* Habilitar el scroll si es necesario */
     background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.65);
     /* Color de fondo con opacidad */
 }
 
@@ -21,7 +21,7 @@
     margin: 5% auto;
     /* 9% desde arriba y centrado */    
     border: 1px solid #888;
-    width: 600px; 
+    width: 650px; 
     height: 450px;   
 }
 

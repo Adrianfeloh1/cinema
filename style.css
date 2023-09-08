@@ -35,6 +35,11 @@ nav a {
     color: #f5f5f5;
 }
 
+.tickets p{
+    
+    margin:-1px 0;
+}
+
 .cart {
     display: flex;
 }
@@ -66,13 +71,13 @@ nav a {
 
 .movie-card {
     background-color: #dbd9d96d;
-    border: solid 1px #3333331d;
-    ;
+    border: solid 1px #3333331d;    
     border-radius: 4px;
     box-shadow: 6px 6px 12px #9b9b9b,
         -6px -6px 12px #ffffff;
     margin: 20px auto;
     width: 250px;
+    cursor: pointer;
 }
 
 .movie-card2{
@@ -88,8 +93,11 @@ nav a {
 }
 
 .descripcion{    
-    padding: 20px 0;
-    
+    padding: 20px 0;    
+}
+
+.descripcion-precio{
+    padding-bottom: 20px;
 }
 
 .card-content img {
