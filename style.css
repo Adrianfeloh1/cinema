@@ -35,13 +35,13 @@ nav a {
     color: #f5f5f5;
 }
 
-.tickets p{
-    
+.tickets p{     
     margin:-1px 0;
 }
 
 .cart {
     display: flex;
+     
 }
 
 .cart a {
@@ -51,6 +51,7 @@ nav a {
 
 .cart img {
     width: 80px;
+    cursor: pointer;  
 }
 
 /*  --------------FIN HEADER--------------- */
@@ -75,21 +76,21 @@ nav a {
     border-radius: 4px;
     box-shadow: 6px 6px 12px #9b9b9b,
         -6px -6px 12px #ffffff;
-    margin: 20px auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
     width: 250px;
     cursor: pointer;
 }
 
 .movie-card2{
-    display: flex; 
-    justify-content: start;   
+    display: flex;       
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    text-align: left;
+    padding: 16px;    
+    text-align: justify;
 }
 
 .descripcion{    
@@ -133,7 +134,7 @@ footer {
     color: #f5f5f5;
     padding: 20px 50px;
     align-items: center;
-
+    margin-top: 50px;
 }
 
 .footer-container {

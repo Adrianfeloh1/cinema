@@ -25,10 +25,23 @@
     height: 450px;   
 }
 
+.conteiner-img{
+    display: flex;   
+    flex-direction: column; 
+    align-items: center;
+    background-color: #131313f6; 
+    color: #fefefe;
+}
+
+.img-cart {    
+    margin: 20px 0;
+    width: 350px;
+}
+
 /* El botón de cerrar */
 .cerrar {
-    color: #aaa;
-    float: right;
+    text-align: center;
+    color: #131313be;    
     font-size: 28px;
     font-weight: bold;
 }

@@ -37,7 +37,7 @@ class ControladorDePeliculas {
         // Abre el modal
         let modal = document.getElementById("myModal");
         modal.style.display = "block";
-    }    
+    }
 
     // 3.mostramos listaPeliculas[p1,p2,p3...]
     mostrarEnDom() {
@@ -59,38 +59,41 @@ class ControladorDePeliculas {
 
         this.listaPeliculas.forEach(pelicula => {
             const peliculaContainer = document.getElementById(`pelicula-${pelicula.id}`)
-
             // Agregamos el evento click al contenedor de la película
             peliculaContainer.addEventListener("click", () => {
                 // Llamamos al método abrirModal para abrir el carrito y el modal al mismo tiempo
                 const controlador = new ControladorDePeliculas();
                 controlador.abrirModal(pelicula);
-                
+
             })
         })
     }
 }
 
-
 // 4. creamos la clase Carrito
 class Carrito {
     constructor() {
-        this.peliculaSeleccionada = []; // Se almacenar la película seleccionada
-        this.contenedorCarrito = document.getElementById("cart_container");
+        this.peliculaSeleccionada = []; // Inicialmente no hay película seleccionada
     }
 
     agregar(pelicula) {
-        this.peliculaSeleccionada = pelicula; // Al seleccionar una película, actualiza la propiedad
+        this.peliculaSeleccionada = pelicula; // Actualiza la película seleccionada
         this.mostrarEnDom();
     }
 
     mostrarEnDom() {
-        // Limpia el carrito para que solo se muestre la película seleccionada
-        this.contenedorCarrito.innerHTML = "";
+        // Obtener el elemento del modal
+        let modal = document.getElementById("myModal");
+
+        // Obtener el contenedor de los detalles de la película en el modal
+        let modalContent = modal.querySelector(".modal-contenido");
+
+        // Limpia el contenido actual del modal
+        modalContent.innerHTML = "";
 
         if (this.peliculaSeleccionada) {
             const pelicula = this.peliculaSeleccionada;
-            this.contenedorCarrito.innerHTML += `
+            modalContent.innerHTML += `
             <div class="movie-card2">
                 <div>
                     <img src="${pelicula.img}" alt="${pelicula.alt}">
@@ -106,7 +109,7 @@ class Carrito {
                     <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Comprar </button>
                 </div>
             </div>`;
-        }
+        } 
     }
 }
 
@@ -119,7 +122,7 @@ const carrito = new Carrito()
 
 const listaDePeliculas = [
     new Pelicula(1, "Oppenheimer", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "1 de septiembre de 2023", " Thriller, Acción", ["7:00 PM", " 9:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1"),
-    new Pelicula(3, "Sonido de Libertad", "Sonido De Libertad, basada en una increíble historia real, trae luz y esperanza al oscuro mundo del tráfico de menores. un agente federal descubre que la hermana del niño todavía está cautiva y decide embarcarse en una peligrosa misión para salvarla. Con el tiempo en su contra, renuncia a su trabajo y se adentra en lo profundo de la selva colombiana, poniendo su vida en riesgo para liberarla y traerla de vuelta a casa.", "5 de septiembre de 2023", "Drama, Acción", ["8:00 PM", " 10:00 PM"], 17500, "General", 100, "./public/sonido-de-libertad.jpg", "Texto alternativo 1"),
+    new Pelicula(3, "Sonido de Libertad", "Basada en una increíble historia real, trae luz y esperanza al oscuro mundo del tráfico de menores. un agente federal descubre que la hermana del niño todavía está cautiva y decide embarcarse en una peligrosa misión para salvarla. Con el tiempo en su contra, se adentra en lo profundo de la selva colombiana, poniendo su vida en riesgo para liberarla y traerla de vuelta a casa.", "5 de septiembre de 2023", "Drama, Acción", ["8:00 PM", " 10:00 PM"], 17500, "General", 100, "./public/sonido-de-libertad.jpg", "Texto alternativo 1"),
     new Pelicula(2, "Blue Beetle", "Jaime Reyes se encuentra en posesión de una antigua reliquia de biotecnología alienígena llamada Escarabajo. Cuando el Escarabajo elige a Jaime como huésped simbiótico, le otorga una armadura con poderes extraordinarios e impredecibles.", "8 de septiembre de 2023", "Fantasía, Ciencia Ficción", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/blue-beetle.jpg", "Texto alternativo 2"),
     new Pelicula(4, "Gran Turismo", "Basada en la historia real de Jann Mardenborough, la película es la historia definitiva de deseos cumplidos de un jugador adolescente de “Gran Turismo”, cuyas habilidades de gaming le llevaron a ganar una serie de competencias de Nissan, hasta convertirse en un verdadero conductor de carros de carreras profesional.", "5 de septiembre de 2023", "Acción, Historia", ["5:00 PM", " 7:00 PM"], 17500, "General", 120, "./public/gran-turismo.jpg", "Texto alternativo 2"),
     new Pelicula(5, "El Rey de la Montaña", "Pedro era apenas un niño cuando presencia el terrible accidente de su padre que le puso fin a su carrera ciclística. Decidido a darle un futuro a su familia, Pedro continúa con el sueño de convertirse en el Rey de la Montaña, Ahora solo le queda enfrentarse a sí mismo, y sanar su corazón para lograr la victoria.", "10 de septiembre de 2023", "Historia", ["3:00 PM", " 6:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/rey-montaña.jpg", "Texto alternativo 1"),
