@@ -64,6 +64,7 @@ class ControladorDePeliculas {
                 // Llamamos al método abrirModal para abrir el carrito y el modal al mismo tiempo
                 const controlador = new ControladorDePeliculas();
                 controlador.abrirModal(pelicula);
+                carrito.mostrarEnDom()
 
             })
         })
@@ -73,12 +74,32 @@ class ControladorDePeliculas {
 // 4. creamos la clase Carrito
 class Carrito {
     constructor() {
-        this.peliculaSeleccionada = []; // Inicialmente no hay película seleccionada
+        this.peliculaSeleccionada = null; // Inicialmente no hay película seleccionada
     }
 
     agregar(pelicula) {
         this.peliculaSeleccionada = pelicula; // Actualiza la película seleccionada
+        this.guardarEnStorage() //4.3.1 ejecutamos funcion
         this.mostrarEnDom();
+    }
+
+    //4.3 creamos el metodo guardar en storage y lo ejecutamos dentro del metodo agregar
+    guardarEnStorage() {
+        let peliculaSeleccionadaJSON = JSON.stringify(this.peliculaSeleccionada)
+        localStorage.setItem("peliculaCarrito", peliculaSeleccionadaJSON)
+    }
+    //4.4 creamos el metodo para recuperar del storage y asi buscar renderizarlo en el dom
+    recuperarStorage() {
+        let peliculaSeleccionadaJSON = localStorage.getItem("peliculaCarrito");
+
+        if (peliculaSeleccionadaJSON) {
+            // Verificamos si hay una película guardada en el localStorage
+            let peliculaEnCarrito = JSON.parse(peliculaSeleccionadaJSON);
+            // Asignamos la película recuperada a la propiedad peliculaSeleccionada
+            this.peliculaSeleccionada = peliculaEnCarrito;
+            // Mostramos la película en el DOM
+            this.mostrarEnDom();
+        }
     }
 
     mostrarEnDom() {
@@ -94,31 +115,35 @@ class Carrito {
         if (this.peliculaSeleccionada) {
             const pelicula = this.peliculaSeleccionada;
             modalContent.innerHTML += `
-            <div class="movie-card2">
-                <div>
-                    <img src="${pelicula.img}" alt="${pelicula.alt}">
-                </div>
-            
-                <div class="card-content">
-                    <h2>${pelicula.titulo}</h2>
-                    <p class="descripcion"><strong>Descripción:</strong> ${pelicula.descripcion}</p>
-                    <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
-                    <p><strong>Género:</strong> ${pelicula.genero}</p>
-                    <p><strong>Sala:</strong> ${pelicula.sala}</p>
-                    <p class="descripcion-precio"><strong>Precio:</strong> $${pelicula.precio}</p>
-                    <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Comprar </button>
-                </div>
-            </div>`;
-        } 
+        <div class="movie-card2">
+            <div>
+                <img src="${pelicula.img}" alt="${pelicula.alt}">
+            </div>
+        
+            <div class="card-content">
+                <h2>${pelicula.titulo}</h2>
+                <p class="descripcion"><strong>Descripción:</strong> ${pelicula.descripcion}</p>
+                <p><strong>Horarios:</strong> ${pelicula.horarios}</p>
+                <p><strong>Género:</strong> ${pelicula.genero}</p>
+                <p><strong>Sala:</strong> ${pelicula.sala}</p>
+                <p class="descripcion-precio"><strong>Precio:</strong> $${pelicula.precio}</p>
+                <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Comprar </button>
+            </div>
+        </div>`;
+        } else {
+            // Si no hay película seleccionada, muestra un mensaje en el modal
+            modalContent.innerHTML = `
+            <div class="conteiner-img">
+                <img class="img-cart" src="./public/Logo-cinecolombia.webp" alt="Logo-cinecolombia">                           
+            </div>
+            <p class="cerrar">Selecciona una película para iniciar</p>
+            `;
+        }
     }
+
+    
+
 }
-
-// 2.2 creamos una instancia CP (CONTROLLADOR PELICULAS )
-const CP = new ControladorDePeliculas()
-// 4.1 creamos las instancia para el carrito
-const carrito = new Carrito()
-
-// 1.1 Creaamos las películas 4.1 lo pasamos a una lista
 
 const listaDePeliculas = [
     new Pelicula(1, "Oppenheimer", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "1 de septiembre de 2023", " Thriller, Acción", ["7:00 PM", " 9:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1"),
@@ -131,43 +156,21 @@ const listaDePeliculas = [
     new Pelicula(8, "Golda", "Un retrato íntimo de una mujer extraordinaria, una mirada cautivadora a la historia de Israel, una poderosa narrativa  con conmovedoras actuaciones. GOLDA captura la esencia de una líder inquebrantable y nos invita a reflexionar sobre el poder del compromiso y la determinación en la búsqueda de los ideales.", "5 de septiembre de 2023", "Drama", ["5:00 PM", " 7:30 PM"], 25800, "IMAX DINAMICS", 120, "./public/golda.png", "Texto alternativo 2")
 ];
 
+// 2.2 creamos una instancia CP (CONTROLLADOR PELICULAS )
+const CP = new ControladorDePeliculas()
+// 4.1 creamos las instancia para el carrito
+const carrito = new Carrito()
+
+// 1.1 Creaamos las películas 4.1 lo pasamos a una lista
 // 4.2 recorremos las películas y la agregamos a la instancia de CP.agregar
 listaDePeliculas.forEach((pelicula) => {
     CP.agregar(pelicula);
 })
-
-//4.3 lo agregamos al localStorage como string
-let listaDePeliculasJSON = JSON.stringify(listaDePeliculas)
-localStorage.setItem("listaCompra", listaDePeliculasJSON)
-
-//4.4 para traer los datos, lo hacemos con getItem y lo PARSEAMOS
-
-let listaDePeliculasObjetoJSON = localStorage.getItem("listaCompra")
-let listaPeliculas = JSON.parse(listaDePeliculasJSON)
-console.log(listaPeliculas)
-
-// 4.5 para traer el objeto con sus metodos
-let nuevaListaPeliculas = []
-listaPeliculas.forEach((pelicula) => {
-
-    let nuevaPelicula = new Pelicula(
-        pelicula.id,
-        pelicula.titulo,
-        pelicula.estreno,
-        pelicula.genero,
-        pelicula.horarios,
-        pelicula.precio,
-        pelicula.sala,
-        pelicula.cantidad,
-        pelicula.img,
-        pelicula.alt
-    )
-    nuevaListaPeliculas.push(nuevaPelicula)
-})
-
-console.log(nuevaListaPeliculas)
-
 CP.mostrarEnDom();
+
+//llamamos el metodo recuperarStorage y lo mostramos en DOM
+carrito.recuperarStorage()
+carrito.mostrarEnDom()
 
 
 
