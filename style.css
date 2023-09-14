@@ -35,12 +35,12 @@ nav a {
     color: #f5f5f5;
 }
 
-.tickets p{     
-    margin:-1px 0;
+.tickets p {
+    margin: -1px 0;
 }
 
 .cart {
-    display: flex;     
+    display: flex;
 }
 
 .cart a {
@@ -50,14 +50,14 @@ nav a {
 
 .cart img {
     width: 80px;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
 /*  --------------FIN HEADER--------------- */
 
 /* Estilos para la tarjeta de la película en el main */
 
-.caterlera{
+.caterlera {
     padding: 0px 80px;
     margin-top: 30px;
 }
@@ -72,7 +72,7 @@ nav a {
 
 .movie-card {
     background-color: #dbd9d96d;
-    border: solid 1px #3333331d;    
+    border: solid 1px #3333331d;
     border-radius: 4px;
     box-shadow: 6px 6px 12px #9b9b9b,
         -6px -6px 12px #ffffff;
@@ -82,22 +82,22 @@ nav a {
     cursor: pointer;
 }
 
-.movie-card2{
-    display: flex;       
+.movie-card2 {
+    display: flex;
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
-    padding: 16px;    
+    padding: 16px;
     text-align: justify;
 }
 
-.descripcion{    
-    padding: 20px 0;    
+.descripcion {
+    padding: 20px 0;
 }
 
-.descripcion-precio{
+.descripcion-precio {
     padding-bottom: 20px;
 }
 
@@ -121,14 +121,36 @@ nav a {
     color: #333;
 }
 
+select {
+    border: none;
+    background-color: #f2f2f2;
+    padding: 6px;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+.cantidad-container{
+    display: flex;  
+    margin-top: 10px;  
+}
+
+.cantidad-btn{
+    margin: 0px 10px;  
+    font-weight: 700;  
+}
+
+.cantidad-btn button{
+    width: 28px;
+    font-size: 18px;
+}
+
 .btn-comprar {
     margin-top: 8px;
     padding: 8px 0;
 }
 
-/* Agrega más estilos según sea necesario */
 
-/* Estilos para el footer */
 footer {
     background-color: #131313f6;
     color: #f5f5f5;
