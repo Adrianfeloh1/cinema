@@ -42,20 +42,20 @@ class ControladorDePeliculas {
                     <p class="descripcion"><strong>Descripción:</strong> ${pelicula.descripcion}</p>                    
                     <p><strong>Género:</strong> ${pelicula.genero}</p>
                     <p><strong>Sala:</strong> ${pelicula.sala}</p>
-                    <p><strong>Horarios:</strong>
-                        <select id="horario-${pelicula.id}">
-                            ${pelicula.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('')}
-                        </select>
-                    </p>
                     <div class="cantidad-container">
                         <p><strong>Cantidad:</strong></p>
-
                         <div class="cantidad-btn">
                             <button class="btn-cantidad" id="restar-cantidad">-</button>
                             <span class="cantidad" id="cantidad">${pelicula.cantidad}</span>
                             <button class="btn-cantidad" id="sumar-cantidad">+</button>
                         </div>
                     </div>
+                    <p><strong>Horarios:</strong>
+                        <select id="horario-${pelicula.id}">
+                            ${pelicula.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('')}
+                        </select>
+                    </p>
+                    
                     <p class="descripcion-precio"><strong>Precio:</strong> $${pelicula.precio}</p>
                     
                     
@@ -185,7 +185,6 @@ class Carrito {
     }
 }
 
-// Creación de instancias y muestra en la página
 const listaDePeliculas = [
     new Pelicula(1, "Oppenheimer", "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.", "1 de septiembre de 2023", "Thriller, Acción", ["7:00 PM", " 9:00 PM"], 25800, "IMAX DINAMICS", 100, "./public/oppenhaimer.jpg", "Texto alternativo 1"),
     new Pelicula(2, "Blue Beetle", "Jaime Reyes se encuentra en posesión de una antigua reliquia de biotecnología alienígena llamada Escarabajo. Cuando el Escarabajo elige a Jaime como huésped simbiótico, le otorga una armadura con poderes extraordinarios e impredecibles.", "8 de septiembre de 2023", "Fantasía, Ciencia Ficción", ["11:00 AM", " 3:00 PM"], 17500, "General", 120, "./public/blue-beetle.jpg", "Texto alternativo 2"),
@@ -208,17 +207,3 @@ CP.mostrarEnDom();
 carrito.recuperarStorage()
 carrito.mostrarEnDom()
 
-// Cerrar el modal al hacer clic en la "x"
-const closeButton = document.querySelector(".close");
-closeButton.addEventListener("click", () => {
-    let modal = document.getElementById("myModal");
-    modal.style.display = "none";
-});
-
-// Cerrar el modal al hacer clic fuera de él
-window.addEventListener("click", (event) => {
-    let modal = document.getElementById("myModal");
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-});

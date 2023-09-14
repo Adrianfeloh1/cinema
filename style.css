@@ -89,12 +89,13 @@ nav a {
 .card-content {
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 12px;
     text-align: justify;
+    justify-content: start;
 }
 
 .descripcion {
-    padding: 20px 0;
+    padding: 16px 0;
 }
 
 .descripcion-precio {
@@ -119,6 +120,7 @@ nav a {
     font-size: 14px;
     line-height: 1.5;
     color: #333;
+    padding-top: 4px;
 }
 
 select {
@@ -143,6 +145,7 @@ select {
 .cantidad-btn button{
     width: 28px;
     font-size: 18px;
+    border: none;
 }
 
 .btn-comprar {
