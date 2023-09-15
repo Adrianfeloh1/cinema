@@ -1,7 +1,7 @@
 // Clase Pelicula
 class Pelicula {
     constructor({
-        id, titulo, descripcion, estreno, genero, horarios, precio, sala, img, alt, cantidadModal = 1, 
+        id, titulo, descripcion, estreno, genero, horarios, precio, sala, img, alt
     }) {
         this.id = id;
         this.titulo = titulo;
@@ -12,7 +12,6 @@ class Pelicula {
         this.sala = sala;
         this.horarios = horarios;
         this.cantidad = 1; // Inicia en 1
-        this.cantidadModal = cantidadModal;
         this.img = img;
         this.alt = alt;
     }
@@ -195,7 +194,6 @@ class Carrito {
     mostrarEnDom() {
         let modal = document.getElementById("myModal");
         let modalContent = modal.querySelector(".modal-contenido");
-        let cartContainer = document.getElementById("cart_container"); // Elemento donde muestras el contenido del carrito
         let cantidadTotalTickets = document.getElementById("cantidad-total-tickets"); // Elemento para mostrar la cantidad total en "Tickets"
 
         modalContent.innerHTML = "";
