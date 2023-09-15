@@ -1,7 +1,7 @@
 // Clase Pelicula
 class Pelicula {
     constructor({
-        id, titulo, descripcion, estreno, genero, horarios, precio, sala, img, alt
+        id, titulo, descripcion, estreno, genero, horarios, precio, sala, img, alt, cantidadModal = 1, 
     }) {
         this.id = id;
         this.titulo = titulo;
@@ -12,6 +12,7 @@ class Pelicula {
         this.sala = sala;
         this.horarios = horarios;
         this.cantidad = 1; // Inicia en 1
+        this.cantidadModal = cantidadModal;
         this.img = img;
         this.alt = alt;
     }
@@ -23,17 +24,18 @@ class ControladorDePeliculas {
         this.listaPeliculas = [];
         this.contenedorPeliculas = document.getElementById("products_container");
     }
-
+    // Método para agregar una película a la lista y mostrarla en el DOM
     agregar(pelicula) {
         this.listaPeliculas.push(pelicula);
         this.mostrarPeliculaEnDom(pelicula);
     }
-
+    // Método para mostrar una película en el DOM
     mostrarPeliculaEnDom(pelicula) {
         const peliculaContainer = document.createElement("div");
         peliculaContainer.className = "movie-card";
         peliculaContainer.dataset.id = pelicula.id;
 
+        // Generamos el contenido HTML para mostrar la película
         peliculaContainer.innerHTML = `
             <div class="card-content">
                 <img src="${pelicula.img}" alt="${pelicula.alt}">
@@ -50,57 +52,66 @@ class ControladorDePeliculas {
 
         this.contenedorPeliculas.appendChild(peliculaContainer);
     }
-
+    // Método para abrir el modal de una película
     abrirModal(pelicula) {
         let modal = document.getElementById("myModal");
         modal.style.display = "block";
-    
+
         let modalContent = modal.querySelector(".modal-contenido");
-    
+
+        // Crea una copia de la película seleccionada
+        const peliculaSeleccionada = { ...pelicula };
+
+        // Crea el contenido del modal con los detalles de la película
         modalContent.innerHTML = `
-            <div class="movie-card2">
-                <div>
-                    <img src="${pelicula.img}" alt="${pelicula.alt}">
+    <div class="movie-card2">
+        <div>
+            <img src="${peliculaSeleccionada.img}" alt="${peliculaSeleccionada.alt}">
+        </div>
+
+        <div class="card-content">
+            <h2>${peliculaSeleccionada.titulo}</h2>
+            <p class="descripcion"><strong>Descripción:</strong> ${peliculaSeleccionada.descripcion}</p>
+            <p><strong>Género:</strong> ${peliculaSeleccionada.genero}</p>
+            <p><strong>Sala:</strong> ${peliculaSeleccionada.sala}</p>
+            <div class="cantidad-container">
+                <p><strong>Cantidad:</strong></p>
+                <div class="cantidad-btn">
+                    <button class="btn-cantidad" id="restar-cantidad">-</button>
+                    <span class="cantidad" id="cantidad-modal">${peliculaSeleccionada.cantidad}</span>
+                    <button class="btn-cantidad" id="sumar-cantidad">+</button>
                 </div>
-            
-                <div class="card-content">
-                    <h2>${pelicula.titulo}</h2>
-                    <p class="descripcion"><strong>Descripción:</strong> ${pelicula.descripcion}</p>                    
-                    <p><strong>Género:</strong> ${pelicula.genero}</p>
-                    <p><strong>Sala:</strong> ${pelicula.sala}</p>
-                    <div class="cantidad-container">
-                        <p><strong>Cantidad:</strong></p>
-                        <div class="cantidad-btn">
-                            <button class="btn-cantidad" id="restar-cantidad">-</button>
-                            <span class="cantidad" id="cantidad-modal">${pelicula.cantidad}</span>
-                            <button class="btn-cantidad" id="sumar-cantidad">+</button>
-                        </div>
-                    </div>
-                    <p><strong>Horarios:</strong>
-                        <select id="horario-${pelicula.id}">
-                            ${pelicula.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('')}
-                        </select>
-                    </p>    
-                    <p class="descripcion-precio"><strong>Precio:</strong> $<span id="precio-total">${pelicula.precio}</span></p>    
-                    <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Añadir a Tickets </button>
-                </div>
-            </div>`;
-    
-        const horarioSelect = modalContent.querySelector(`#horario-${pelicula.id}`);
-        const comprarButton = modalContent.querySelector(`#agregar-pelicula-${pelicula.id}`);
+            </div>
+            <p><strong>Horarios:</strong>
+                <select id="horario-${peliculaSeleccionada.id}">
+                    ${peliculaSeleccionada.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('')}
+                </select>
+            </p>
+            <!-- Agrega un elemento para mostrar el precio total -->
+            <p class="descripcion-precio"><strong>Precio Total:</strong> $<span id="precio-total">${peliculaSeleccionada.precio * peliculaSeleccionada.cantidad}</span></p>
+            <button class="btn-comprar" id="agregar-pelicula-${peliculaSeleccionada.id}"> Añadir a Tickets </button>
+        </div>
+    </div>`;
+
+        // Obtén los elementos del modal
+        const horarioSelect = modalContent.querySelector(`#horario-${peliculaSeleccionada.id}`);
+        const comprarButton = modalContent.querySelector(`#agregar-pelicula-${peliculaSeleccionada.id}`);
         const cantidadElement = modalContent.querySelector("#cantidad-modal");
         const restarCantidadButton = modalContent.querySelector("#restar-cantidad");
         const sumarCantidadButton = modalContent.querySelector("#sumar-cantidad");
         const precioTotalElement = modalContent.querySelector("#precio-total");
-        
-        let cantidadModal = pelicula.cantidad; // Variable para la cantidad en el modal
-    
+
+        // Variable para la cantidad en el modal
+        let cantidadModal = peliculaSeleccionada.cantidad;
+
+        // Función para actualizar el precio total
         const actualizarPrecioTotal = () => {
-            const precioUnitario = pelicula.precio;
+            const precioUnitario = peliculaSeleccionada.precio;
             const precioTotal = precioUnitario * cantidadModal;
             precioTotalElement.textContent = precioTotal;
         }
-    
+
+        // Listener para el botón "Restar Cantidad"
         restarCantidadButton.addEventListener("click", () => {
             if (cantidadModal > 1) {
                 cantidadModal--;
@@ -108,49 +119,53 @@ class ControladorDePeliculas {
                 actualizarPrecioTotal();
             }
         });
-    
+
+        // Listener para el botón "Sumar Cantidad"
         sumarCantidadButton.addEventListener("click", () => {
             cantidadModal++;
             cantidadElement.textContent = cantidadModal;
             actualizarPrecioTotal();
         });
-    
+
+        // Listener para el botón "Añadir a Tickets"
         comprarButton.addEventListener("click", () => {
             const horarioSeleccionado = horarioSelect.value;
-            carrito.agregar(pelicula, horarioSeleccionado, cantidadModal);
+            // Llama al método agregar del carrito con la película copiada, horario y cantidad seleccionada
+            carrito.agregar({ ...peliculaSeleccionada }, horarioSeleccionado, cantidadModal);
             carrito.mostrarEnDom();
             modal.style.display = "none";
         });
-    
+
+        // Inicializa el precio total
         actualizarPrecioTotal();
     }
-    
 
+    // Método para mostrar todas las películas en el DOM
     mostrarEnDom() {
         this.listaPeliculas.forEach(pelicula => {
             this.mostrarPeliculaEnDom(pelicula);
         });
     }
 }
-
+// Clase Carrito
 class Carrito {
     constructor() {
         this.peliculaSeleccionada = null;
         this.cantidadTotal = 0;
     }
-
+    // Método para mostrar un mensaje Toastify
     mostrarToastify() {
         Toastify({
             text: "Añadido a Tickets",
-            duration: 3000,
+            duration: 2000,
             gravity: "top", // `top` or `bottom`
             position: "right", // `left`, `center` or `right`        
             style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
+                background: "#0065A8",
             }
         }).showToast();
     }
-
+    // Método para agregar películas al carrito
     agregar(pelicula, horarioSeleccionado, cantidadSeleccionada) {
         this.peliculaSeleccionada = {
             pelicula,
@@ -161,12 +176,12 @@ class Carrito {
         this.mostrarEnDom();
         this.mostrarToastify();
     }
-
+    // Método para guardar el estado del carrito en el almacenamiento local
     guardarEnStorage() {
         let peliculaSeleccionadaJSON = JSON.stringify(this.peliculaSeleccionada);
         localStorage.setItem("peliculaCarrito", peliculaSeleccionadaJSON);
     }
-
+    // Método para recuperar el estado del carrito desde el almacenamiento local
     recuperarStorage() {
         let peliculaSeleccionadaJSON = localStorage.getItem("peliculaCarrito");
 
@@ -176,7 +191,7 @@ class Carrito {
             this.mostrarEnDom();
         }
     }
-
+    // Método para mostrar el contenido del carrito en el DOM
     mostrarEnDom() {
         let modal = document.getElementById("myModal");
         let modalContent = modal.querySelector(".modal-contenido");
@@ -214,12 +229,12 @@ class Carrito {
             </div>
             <p class="cerrar">Selecciona una película para iniciar</p>
             `;
-            
+
             cantidadTotalTickets.textContent = 0;
         }
     }
 }
-
+//Creación de una lista de películas y objetos ControladorDePeliculas y Carrito
 const listaDePeliculas = [
     new Pelicula({
         id: 1,
@@ -322,11 +337,13 @@ const listaDePeliculas = [
 const CP = new ControladorDePeliculas();
 const carrito = new Carrito();
 
+// Agregamos cada película a ControladorDePeliculas y mostramos en el DOM
 listaDePeliculas.forEach(pelicula => {
     CP.agregar(pelicula);
 });
-
+// Mostramos todas las películas en el DOM
 CP.mostrarEnDom();
 
+// Recuperamos la información del carrito del almacenamiento local y mostramos en el modal
 carrito.recuperarStorage();
 carrito.mostrarEnDom();
