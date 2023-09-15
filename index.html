@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>CineColombia</title>
 
     <link rel="stylesheet" href="style.css" />
@@ -12,6 +11,8 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!--------------TOASTIFY--------------->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body>
@@ -28,13 +29,13 @@
         </nav>
         <div class="cart">
             <div class="tickets">
-                <p>Tickets</p>
+                <p>Tickets <span id="cantidad-total-tickets">0</span></p>
                 <button id="myBtn"><img src="./public/tickets.png" alt="tickets"></button>
             </div>
         </div>
     </header>
 
-    <main>
+    <main>        
         <h2 class="caterlera">EN CARTELERA</h2>
         <section id="products_container">
             <!-- Contenido app -->
@@ -44,11 +45,11 @@
     <!-- Modal -->
 
     <div id="myModal" class="modal">
-        
+
         <!-- Contenido del modal -->
-        <div class="modal-contenido">           
+        <div class="modal-contenido">
             <div id="cart_container">
-                <!-- Contenido de la película seleccionada o mensaje -->                
+                <!-- Contenido de la película seleccionada o mensaje -->
             </div>
             <p class="cerrar"></p>
         </div>
@@ -83,6 +84,8 @@
 
     <script src="app.js"></script>
     <script src="./src/modal.js"></script>
+    <!--------------TOASTIFY--------------->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 
 </html>
