@@ -25,8 +25,7 @@ class ControladorDePeliculas {
     }
     // Método para agregar una película a la lista y mostrarla en el DOM
     agregar(pelicula) {
-        this.listaPeliculas.push(pelicula);
-        this.mostrarPeliculaEnDom(pelicula);
+        this.listaPeliculas.push(pelicula);        
     }
     // Método para mostrar una película en el DOM
     mostrarPeliculaEnDom(pelicula) {
@@ -145,6 +144,8 @@ class ControladorDePeliculas {
             this.mostrarPeliculaEnDom(pelicula);
         });
     }
+
+    
 }
 // Clase Carrito
 class Carrito {
