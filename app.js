@@ -10,9 +10,9 @@ class Pelicula {
         this.precio = precio;
         this.sala = sala;
         this.horarios = horarios;
-        this.cantidad = 1; // Inicia en 1
         this.img = img;
         this.alt = alt;
+        this.cantidad = 1; // Inicia en 1
     }
 }
 
@@ -26,6 +26,29 @@ class ControladorDePeliculas {
     // Método para agregar una película a la lista y mostrarla en el DOM
     agregar(pelicula) {
         this.listaPeliculas.push(pelicula);
+    }
+
+    async prepararContenedorPeliculas() {
+        let listaDePeliculasJSON = await fetch("peliculas.json")
+        let listaDePeliculasJS = await listaDePeliculasJSON.json()
+    
+        listaDePeliculasJS.forEach(pelicula => {
+            let nuevaPelicula = new Pelicula({
+                id: pelicula.id,
+                titulo: pelicula.titulo,
+                descripcion: pelicula.descripcion,
+                estreno: pelicula.estreno,
+                genero: pelicula.genero,
+                precio: pelicula.precio,
+                sala: pelicula.sala,
+                horarios: pelicula.horarios,
+                img: pelicula.img,
+                alt: pelicula.alt,
+            });
+            this.agregar(nuevaPelicula);
+        })
+    
+        this.mostrarEnDom()
     }
 
     // Método para mostrar una película en el DOM
@@ -87,7 +110,7 @@ class ControladorDePeliculas {
                     ${peliculaSeleccionada.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('')}
                 </select>
             </p>
-            <!-- Agrega un elemento para mostrar el precio total -->
+            
             <p class="descripcion-precio"><strong>Precio Total:</strong> $<span id="precio-total">${peliculaSeleccionada.precio * peliculaSeleccionada.cantidad}</span></p>
             <button class="btn-comprar" id="agregar-pelicula-${peliculaSeleccionada.id}"> Añadir a Tickets </button>
         </div>
@@ -249,116 +272,14 @@ class Carrito {
         }
     }
 }
-//Creación de una lista de películas y objetos ControladorDePeliculas y Carrito
-const listaDePeliculas = [
-    new Pelicula({
-        id: 1,
-        titulo: "Oppenheimer",
-        descripcion: "Escrita y dirigida por Christopher Nolan, Oppenheimer es un thriller épico que sumerge al público en la trepidante paradoja del enigmático hombre que debe arriesgarse a destruir el mundo para poder salvarlo.",
-        estreno: "1 de septiembre de 2023",
-        genero: "Thriller, Acción",
-        horarios: ["7:00 PM", " 9:00 PM"],
-        precio: 25800,
-        sala: "IMAX DINAMICS",
-        img: "./public/oppenhaimer.jpg",
-        alt: "Texto alternativo 1"
-    }),
-    new Pelicula({
-        id: 2,
-        titulo: "Blue Beetle",
-        descripcion: "Jaime Reyes se encuentra en posesión de una antigua reliquia de biotecnología alienígena llamada Escarabajo. Cuando el Escarabajo elige a Jaime como huésped simbiótico, le otorga una armadura con poderes extraordinarios e impredecibles.",
-        estreno: "8 de septiembre de 2023",
-        genero: "Fantasía, Ciencia Ficción",
-        horarios: ["11:00 AM", " 3:00 PM"],
-        precio: 17500,
-        sala: "General",
-        img: "./public/blue-beetle.jpg",
-        alt: "Texto alternativo 2"
-    }),
-    new Pelicula({
-        id: 3,
-        titulo: "Sonido de Libertad",
-        descripcion: "Basada en una increíble historia real, trae luz y esperanza al oscuro mundo del tráfico de menores. un agente federal descubre que la hermana del niño todavía está cautiva y decide embarcarse en una peligrosa misión para salvarla. Se adentra en lo profundo de la selva colombiana, poniendo su vida en riesgo para liberarla y traerla de vuelta a casa.",
-        estreno: "5 de septiembre de 2023",
-        genero: "Drama, Acción",
-        horarios: ["8:00 PM", " 10:00 PM"],
-        precio: 17500,
-        sala: "General",
-        img: "./public/sonido-de-libertad.jpg",
-        alt: "Texto alternativo 1"
-    }),
-    new Pelicula({
-        id: 4,
-        titulo: "Gran Turismo",
-        descripcion: "Basada en la historia real de Jann Mardenborough, la película es la historia definitiva de deseos cumplidos de un jugador adolescente de “Gran Turismo”, cuyas habilidades de gaming le llevaron a ganar una serie de competencias de Nissan, hasta convertirse en un verdadero conductor de carros de carreras profesional.",
-        estreno: "5 de septiembre de 2023",
-        genero: "Acción, Historia",
-        horarios: ["5:00 PM", " 7:00 PM"],
-        precio: 17500,
-        sala: "General",
-        img: "./public/gran-turismo.jpg",
-        alt: "Texto alternativo 2"
-    }),
-    new Pelicula({
-        id: 5,
-        titulo: "El Rey de la Montaña",
-        descripcion: "Pedro era apenas un niño cuando presencia el terrible accidente de su padre que le puso fin a su carrera ciclística. Decidido a darle un futuro a su familia, Pedro continúa con el sueño de convertirse en el Rey de la Montaña, Ahora solo le queda enfrentarse a sí mismo, y sanar su corazón para lograr la victoria.",
-        estreno: "10 de septiembre de 2023",
-        genero: "Historia",
-        horarios: ["3:00 PM", " 6:00 PM"],
-        precio: 25800,
-        sala: "IMAX DINAMICS",
-        img: "./public/rey-montaña.jpg",
-        alt: "Texto alternativo 1"
-    }),
-    new Pelicula({
-        id: 6,
-        titulo: "Milagros",
-        descripcion: "Dicen que el perro es el mejor amigo del hombre, un Border Terrier ingenuo y optimista es abandonado en las calles de la ciudad por su humilde dueño, Reggie estaba seguro de que su amado dueño nunca lo dejaría a propósito. Reggie se da cuenta que estaba en una relación tóxica y empieza a ver a Doug como el canalla despiadado que es.",
-        estreno: "10 de septiembre de 2023",
-        genero: "Comedia, aventura",
-        horarios: ["11:00 AM", " 3:00 PM"],
-        precio: 25800,
-        sala: "IMAX DINAMICS",
-        img: "./public/milagros.png",
-        alt: "Texto alternativo 2"
-    }),
-    new Pelicula({
-        id: 7,
-        titulo: "Cacería en Venecia",
-        descripcion: "En la Venecia posterior a la Segunda Guerra Mundial, Poirot, ahora retirado y viviendo en su propio exilio, asiste a regañadientes a una sesión de espiritismo. Cuando uno de los invitados es asesinado, depende del ex detective descubrir una vez más al asesino.",
-        estreno: "8 de septiembre de 2023",
-        genero: "Acción",
-        horarios: ["2:00 PM", " 5:00 PM"],
-        precio: 17500,
-        sala: "General",
-        img: "./public/venice.png",
-        alt: "Texto alternativo 1"
-    }),
-    new Pelicula({
-        id: 8,
-        titulo: "Golda",
-        descripcion: "Un retrato íntimo de una mujer extraordinaria, una mirada cautivadora a la historia de Israel, una poderosa narrativa con conmovedoras actuaciones. GOLDA captura la esencia de una líder inquebrantable y nos invita a reflexionar sobre el poder del compromiso y la determinación en la búsqueda de los ideales.",
-        estreno: "5 de septiembre de 2023",
-        genero: "Drama",
-        horarios: ["5:00 PM", " 7:30 PM"],
-        precio: 25800,
-        sala: "IMAX DINAMICS",
-        img: "./public/golda.png",
-        alt: "Texto alternativo 2"
-    })
-];
 
 const CP = new ControladorDePeliculas();
 const carrito = new Carrito();
 
-// Agregamos cada película a ControladorDePeliculas y mostramos en el DOM
-listaDePeliculas.forEach(pelicula => {
-    CP.agregar(pelicula);
-});
-// Mostramos todas las películas en el DOM
-CP.mostrarEnDom();
+CP.prepararContenedorPeliculas()
 
 // Recuperamos la información del carrito del almacenamiento local y mostramos en el modal
 carrito.recuperarStorage();
 carrito.mostrarEnDom();
+
+
