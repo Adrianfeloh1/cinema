@@ -31,7 +31,7 @@ class ControladorDePeliculas {
     async prepararContenedorPeliculas() {
         let listaDePeliculasJSON = await fetch("peliculas.json")
         let listaDePeliculasJS = await listaDePeliculasJSON.json()
-    
+
         listaDePeliculasJS.forEach(pelicula => {
             let nuevaPelicula = new Pelicula({
                 id: pelicula.id,
@@ -47,7 +47,7 @@ class ControladorDePeliculas {
             });
             this.agregar(nuevaPelicula);
         })
-    
+
         this.mostrarEnDom()
     }
 
@@ -154,13 +154,13 @@ class ControladorDePeliculas {
         comprarButton.addEventListener("click", () => {
             const horarioSeleccionado = horarioSelect.value;
             // Llama al método agregar del carrito con la película copiada, horario y cantidad seleccionada
-            carrito.agregarYLimpiar({ ...peliculaSeleccionada }, horarioSeleccionado, cantidadModal);
+            carrito.agregarYLimpiar( peliculaSeleccionada , horarioSeleccionado, cantidadModal);
             carrito.mostrarEnDom();
             modal.style.display = "none";
         });
 
         // Inicializa el precio total
-        actualizarPrecioTotal();
+        actualizarPrecioTotal();        
     }
 
     // Método para mostrar todas las películas en el DOM
@@ -174,17 +174,17 @@ class ControladorDePeliculas {
 // Clase Carrito
 class Carrito {
     constructor() {
-        this.peliculaSeleccionada = null;
-        this.cantidadTotal = 0;
+        this.peliculaSeleccionada = null
+        this.cantidadTotal = 0
     }
 
     // Método para mostrar un mensaje Toastify
     mostrarToastify() {
         Toastify({
-            text: "Añadido a Tickets",
+            text: "La película ha sido añadida a Tickets",
             duration: 2000,
             gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`        
+            position: "center", // `left`, `center` or `right`        
             style: {
                 background: "#0065A8",
             }
@@ -201,17 +201,11 @@ class Carrito {
         this.guardarEnStorage();
         this.mostrarEnDom();
         this.mostrarToastify();
-    }
+    }        
 
-    limpiarCarrito() {
-        this.peliculaSeleccionada = null;
-        localStorage.removeItem("peliculaCarrito");
-    }
-
-    agregarYLimpiar(pelicula, horarioSeleccionado, cantidadSeleccionada) {
-        this.limpiarCarrito();
+    agregarYLimpiar(pelicula, horarioSeleccionado, cantidadSeleccionada) {        
         this.agregar(pelicula, horarioSeleccionado, cantidadSeleccionada);
-    }
+    }    
 
     // Método para guardar el estado del carrito en el almacenamiento local
     guardarEnStorage() {
@@ -219,7 +213,7 @@ class Carrito {
         localStorage.setItem("peliculaCarrito", peliculaSeleccionadaJSON);
     }
 
-    // Método para recuperar el estado del carrito desde el almacenamiento local
+    // Método para recuperar el estado del carrito desde el localstorage
     recuperarStorage() {
         let peliculaSeleccionadaJSON = localStorage.getItem("peliculaCarrito");
 
@@ -229,6 +223,27 @@ class Carrito {
             this.mostrarEnDom();
         }
     }
+    //limpiar el localstorage
+    limpiarLocalStorage() {
+        localStorage.removeItem("peliculaCarrito")
+    }    
+
+    eventoFinalizarCompra() {
+        const pagar = document.getElementById("pagar")
+
+        pagar.addEventListener("click", () => {
+
+            this.limpiarLocalStorage();           
+            
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Tu pago se ha registrado con Éxito. ¡Disfruta la película!',
+                showConfirmButton: false,
+                timer: 3500
+            })               
+        })         
+    }        
 
     // Método para mostrar el contenido del carrito en el DOM
     mostrarEnDom() {
@@ -254,7 +269,7 @@ class Carrito {
                     <p><strong>Género:</strong> ${pelicula.genero}</p>
                     <p><strong>Sala:</strong> ${pelicula.sala}</p>
                     <p class="descripcion-precio"><strong>Precio:</strong> $${pelicula.precio}</p>
-                    <button class="btn-comprar" id="agregar-pelicula-${pelicula.id}"> Pagar </button>
+                    <button class="btn-comprar" id="pagar"> Pagar </button>
                 </div>
             </div>`;
 
@@ -269,8 +284,10 @@ class Carrito {
             `;
 
             cantidadTotalTickets.textContent = 0;
+            
         }
-    }
+        carrito.eventoFinalizarCompra()
+    }    
 }
 
 const CP = new ControladorDePeliculas();
@@ -278,8 +295,5 @@ const carrito = new Carrito();
 
 CP.prepararContenedorPeliculas()
 
-// Recuperamos la información del carrito del almacenamiento local y mostramos en el modal
 carrito.recuperarStorage();
 carrito.mostrarEnDom();
-
-
