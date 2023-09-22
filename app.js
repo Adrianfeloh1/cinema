@@ -1,4 +1,3 @@
-// Clase Pelicula
 class Pelicula {
     constructor({
         id, titulo, descripcion, estreno, genero, horarios, precio, sala, img, alt
@@ -23,10 +22,12 @@ class ControladorDePeliculas {
         this.listaPeliculas = [];
         this.contenedorPeliculas = document.getElementById("products_container");
     }
+
     // Método para agregar una película a la lista y mostrarla en el DOM
     agregar(pelicula) {
-        this.listaPeliculas.push(pelicula);        
+        this.listaPeliculas.push(pelicula);
     }
+
     // Método para mostrar una película en el DOM
     mostrarPeliculaEnDom(pelicula) {
         const peliculaContainer = document.createElement("div");
@@ -43,13 +44,14 @@ class ControladorDePeliculas {
                 <p><strong>Horarios:</strong> ${pelicula.horarios.join(' - ')}</p>
             </div>
         `;
-
+        //evento click en modal
         peliculaContainer.addEventListener("click", () => {
             this.abrirModal(pelicula);
         });
 
         this.contenedorPeliculas.appendChild(peliculaContainer);
     }
+
     // Método para abrir el modal de una película
     abrirModal(pelicula) {
         let modal = document.getElementById("myModal");
@@ -91,7 +93,7 @@ class ControladorDePeliculas {
         </div>
     </div>`;
 
-        // Obtén los elementos del modal
+        // Obtenemos los elementos del modal
         const horarioSelect = modalContent.querySelector(`#horario-${peliculaSeleccionada.id}`);
         const comprarButton = modalContent.querySelector(`#agregar-pelicula-${peliculaSeleccionada.id}`);
         const cantidadElement = modalContent.querySelector("#cantidad-modal");
@@ -129,7 +131,7 @@ class ControladorDePeliculas {
         comprarButton.addEventListener("click", () => {
             const horarioSeleccionado = horarioSelect.value;
             // Llama al método agregar del carrito con la película copiada, horario y cantidad seleccionada
-            carrito.agregar({ ...peliculaSeleccionada }, horarioSeleccionado, cantidadModal);
+            carrito.agregarYLimpiar({ ...peliculaSeleccionada }, horarioSeleccionado, cantidadModal);
             carrito.mostrarEnDom();
             modal.style.display = "none";
         });
@@ -144,15 +146,15 @@ class ControladorDePeliculas {
             this.mostrarPeliculaEnDom(pelicula);
         });
     }
-
-    
 }
+
 // Clase Carrito
 class Carrito {
     constructor() {
         this.peliculaSeleccionada = null;
         this.cantidadTotal = 0;
     }
+
     // Método para mostrar un mensaje Toastify
     mostrarToastify() {
         Toastify({
@@ -165,6 +167,7 @@ class Carrito {
             }
         }).showToast();
     }
+
     // Método para agregar películas al carrito
     agregar(pelicula, horarioSeleccionado, cantidadSeleccionada) {
         this.peliculaSeleccionada = {
@@ -176,11 +179,23 @@ class Carrito {
         this.mostrarEnDom();
         this.mostrarToastify();
     }
+
+    limpiarCarrito() {
+        this.peliculaSeleccionada = null;
+        localStorage.removeItem("peliculaCarrito");
+    }
+
+    agregarYLimpiar(pelicula, horarioSeleccionado, cantidadSeleccionada) {
+        this.limpiarCarrito();
+        this.agregar(pelicula, horarioSeleccionado, cantidadSeleccionada);
+    }
+
     // Método para guardar el estado del carrito en el almacenamiento local
     guardarEnStorage() {
         let peliculaSeleccionadaJSON = JSON.stringify(this.peliculaSeleccionada);
         localStorage.setItem("peliculaCarrito", peliculaSeleccionadaJSON);
     }
+
     // Método para recuperar el estado del carrito desde el almacenamiento local
     recuperarStorage() {
         let peliculaSeleccionadaJSON = localStorage.getItem("peliculaCarrito");
@@ -191,6 +206,7 @@ class Carrito {
             this.mostrarEnDom();
         }
     }
+
     // Método para mostrar el contenido del carrito en el DOM
     mostrarEnDom() {
         let modal = document.getElementById("myModal");
@@ -206,7 +222,7 @@ class Carrito {
                 <div>
                     <img src="${pelicula.img}" alt="${pelicula.alt}">
                 </div>
-            
+
                 <div class="card-content">
                     <h2>${pelicula.titulo}</h2>
                     <p class="descripcion"><strong>Descripción:</strong> ${pelicula.descripcion}</p>
